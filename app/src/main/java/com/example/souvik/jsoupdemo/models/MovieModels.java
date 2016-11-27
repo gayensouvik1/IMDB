@@ -6,6 +6,7 @@ package com.example.souvik.jsoupdemo.models;
 
 public class MovieModels {
 
+    private String imageURL;
     private String name;
     private String director;
 
@@ -15,5 +16,13 @@ public class MovieModels {
 
     public void setName(String s){
         name = s;
+    }
+
+    public String getImageURL(){
+        return imageURL;
+    }
+
+    public void setImageURL(String s){
+        imageURL = s;
     }
 }

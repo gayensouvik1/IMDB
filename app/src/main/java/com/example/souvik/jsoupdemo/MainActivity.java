@@ -1,15 +1,10 @@
 package com.example.souvik.jsoupdemo;
 
-import android.content.Context;
 import android.os.AsyncTask;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,8 +18,6 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import it.sephiroth.android.library.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,22 +45,30 @@ public class MainActivity extends AppCompatActivity {
         protected List<MovieModels> doInBackground(String... params){
 
             List<MovieModels> movieModelsList = new ArrayList<>();
+            String urls[] = new String[255];
             try {
 
                 Document doc = Jsoup.connect("http://www.imdb.com/chart/top").get();
                 Elements link = doc.select("img[src$=.jpg]");
                 Elements content = doc.select("a[href^=/title/][title]");
+                int i=0;
                 for(Element e:link){
-                    words += e.attr("src");
-                    break;
+                    words = e.attr("src");
+                    urls[i] = words;
+                    i++;
                 }
+                i=0;
                 for(Element e:content){
-                    mName = "";
-                    mName += e.text();
+
+                    mName = e.text();
+
                     MovieModels movieModels = new MovieModels();
+
                     movieModels.setName(mName);
+                    movieModels.setImageURL(urls[i]);
 
                     movieModelsList.add(movieModels);
+                    i++;
 
                 }
 
@@ -89,12 +90,6 @@ public class MainActivity extends AppCompatActivity {
 
             MovieAdapter adapter = new MovieAdapter(MainActivity.this,R.layout.content,result);
             listView.setAdapter(adapter);
-
-//
-//            text1.setText(txt);
-//            Picasso.with(MainActivity.this).load(words).into(imageView);
-//            movieAdapter = new MovieAdapter(getApplicationContext(),R.layout.content,result);
-//            listView.setAdapter(movieAdapter);
 
         }
     }

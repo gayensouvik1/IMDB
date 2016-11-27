@@ -5,11 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.souvik.jsoupdemo.models.MovieModels;
 
 import java.util.List;
+
+import it.sephiroth.android.library.picasso.Picasso;
 
 /**
  * Created by souvik on 27/11/16.
@@ -39,11 +42,16 @@ public class MovieAdapter extends ArrayAdapter {
         }
 
         TextView name;
+        ImageView imageView;
+
         name = (TextView)convertView.findViewById(R.id.name);
+        imageView = (ImageView)convertView.findViewById(R.id.movieIcon);
+
         name.setText(movieModelsList.get(position).getName());
+        Picasso.with(getContext()).load(movieModelsList.get(position).getImageURL()).into(imageView);
 
         return convertView;
     }
 
-    
+
 }
