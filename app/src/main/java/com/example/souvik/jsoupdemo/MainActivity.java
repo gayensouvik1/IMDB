@@ -41,20 +41,30 @@ public class MainActivity extends AppCompatActivity {
     public class doIt extends AsyncTask<String,String,List<MovieModels>>{
 
         String words="",mName="";
+        double rate=0;
 
         protected List<MovieModels> doInBackground(String... params){
 
             List<MovieModels> movieModelsList = new ArrayList<>();
             String urls[] = new String[255];
+            double rating[] = new double[255];
             try {
 
                 Document doc = Jsoup.connect("http://www.imdb.com/chart/top").get();
                 Elements link = doc.select("img[src$=.jpg]");
                 Elements content = doc.select("a[href^=/title/][title]");
+                Elements ratings = doc.select("strong[title]");
                 int i=0;
                 for(Element e:link){
                     words = e.attr("src");
                     urls[i] = words;
+                    i++;
+                }
+                i=0;
+                for(Element e:ratings){
+
+                    rate=Double.parseDouble(e.text());
+                    rating[i] = rate;
                     i++;
                 }
                 i=0;
@@ -66,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
 
                     movieModels.setName(mName);
                     movieModels.setImageURL(urls[i]);
+                    movieModels.setRating(rating[i]);
 
                     movieModelsList.add(movieModels);
                     i++;

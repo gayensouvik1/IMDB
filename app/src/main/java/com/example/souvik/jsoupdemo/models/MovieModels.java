@@ -8,7 +8,7 @@ public class MovieModels {
 
     private String imageURL;
     private String name;
-    private String director;
+    private double rating;
 
     public String getName(){
         return name;
@@ -24,5 +24,13 @@ public class MovieModels {
 
     public void setImageURL(String s){
         imageURL = s;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 }
